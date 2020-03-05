@@ -22,6 +22,7 @@ var params = {
   Item: {
     PK: `ORG#${orgId}`,
     SK: `EMP#${employeeId}`,
+    DATA: `EMP#${employeeName}`,
     name: `${employeeName}`,
     email: `${employeeEmail}`,
     projectId: `${employeeId}`

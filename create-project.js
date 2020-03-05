@@ -14,13 +14,15 @@ if (args.length === 0 || args.length > 2) {
 
 const orgId = args[0];
 const projectId = uuid();
+const projectName = args[1];
 
 var params = {
   TableName: "next-live-dev",
   Item: {
     PK: `ORG#${orgId}`,
     SK: `PRO#agile#${projectId}`,
-    name: `${args[1]}`,
+    DATA: `PRO#${projectName}`,
+    name: projectName,
     projectId: `${projectId}`
   }
 };

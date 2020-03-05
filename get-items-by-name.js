@@ -5,24 +5,26 @@ AWS.config.update({ region: "ap-southeast-2" });
 
 var args = process.argv.slice(2);
 
-if (args.length === 0 || args.length > 2) {
+if (args.length === 0 || args.length > 3) {
   console.log(
-    "Usage: node get-projects-assigned <id of organization> <id of emplyee>"
+    "Usage: node get-items-by-name <id of organization> <ORG | PRO | EMP> <name>"
   );
   return;
 }
 
 const orgId = args[0];
-const employeeId = args[1];
+const type = args[1];
+const name = args[2];
 
 var params = {
   TableName: "next-live-dev",
-  IndexName: "SK-PK-index",
-  // Using inverted index, so PK is SK
-  KeyConditionExpression: "#SK = :SK",
-  ExpressionAttributeNames: { "#SK": "SK" },
+  IndexName: "PK-DATA-index",
+  KeyConditionExpression: "#PK = :PK and begins_with(#SK, :SK)",
+  // Using inverted index, so SK is DATA
+  ExpressionAttributeNames: { "#PK": "PK", "#SK": "DATA" },
   ExpressionAttributeValues: {
-    ":SK": `ORG#${orgId}#EMP#${employeeId}`
+    ":PK": `ORG#${orgId}`,
+    ":SK": `${type}#${name}`
   }
 };
 
